@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  cadastropessoa1:
+    build:
+      ./
+    networks:
+      - network-internal
+    ports:
+    - "8181:8080"
+    environment:
+      MYSQL_HOST: mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  cadastropessoa2:
+    build:
+      ./
+    networks:
+      - network-internal
+    ports:
+      - "8182:8080"
+    environment:
+      MYSQL_HOST: mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  cadastropessoa3:
+    build:
+      ./
+    networks:
+      - network-internal
+    ports:
+      - "8183:8080"
+    environment:
+      MYSQL_HOST: mysql
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  mysql:
+    image: mysql
+    networks:
+      - network-internal
+    ports:
+    - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+
+networks:
+  network-internal:
+    name: network-internal
